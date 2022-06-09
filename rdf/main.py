@@ -1,6 +1,6 @@
 import math
 
-#import numpy as np
+
 import time
 
 
@@ -66,22 +66,26 @@ def main():
         g.append(0)
 
     total = 0
+
+    # print("START")
     na2 = 0
     na1 = 0
-    print("START")
-    q = 0
-    s = 0
-    for a in range(0, 1050, 50):
+    for a in range(0, 1050, 50): #maybe an issue where steps == 1000 in input file but only iterate 20 times?
 
         step = d[a]
 
         for i in range(atoms - 1):
+
             if step[i][0] == r1:
-                na1 += 1
+                if a < 1:
+                    na1 += 1
                 for j in range(i + 1, atoms):
                     if step[j][0] == r2:
-                        # if molecule1 != molecule2
-                        na2 += 1
+                        if a<1 and i <1:
+                            na2 +=1
+                        # if molecule1 != molecule
+                        # Not necessary rn because one molecule only has one O
+
 
                         r1x = float(step[i][1])
                         r1y = float(step[i][2])
@@ -96,42 +100,45 @@ def main():
 
 
                         r = math.sqrt(((r1x - r2x) ** 2) + ((r1y - r2y) ** 2) + ((r1z - r2z) ** 2))
+
                         # r = math.sqrt((((float(step[j][1]) - float(step[i][1])) ** 2) + ((float(step[j][2]) -
                         # float(step[i][2])) ** 2) + ( (float(step[j][3]) - float(step[i][3])) ** 2)))
 
                         if r <= rmax:
+
+
                             binn = (int)(r // dr)
 
-                            hist[binn] += 1
+                            hist[binn] += 2
                             total += binn
-
+    na2 += 1
     total = total / atoms
-    print(total * vn)
+    # print(total * vn)
     rho = na1 / vol
     for i in range(bins):
         rlow = (i - 1) * dr
         rhigh = rlow + dr
         vvol = (4.0 / 3.0) * math.pi * (rhigh ** 3 - rlow ** 3)
         g[i] = hist[i] / (vvol * steps * na2 * rho)
-
-    print(g)
+    # print(vvol)
+    # print(steps)
+    # print(na2)
+    # print(rho)
+    #
+    # print("g",g)
     o = 0.0
     for i in g:
         o += i
-    print(o)
-
-    print(o * total * vn)
-
-    print("***")
+    # print(o)
+    #
+    # print(o * total * vn)
+    #
+    # print("***")
+    f = open("py_OO.dat", "w")
     for i in range(bins):
-        print("*" * int(1 + hist[i] / 10))
-    print(hist[100])
-    print(hist[200])
-    print(hist[300])
-    print(hist[-1])
-    t2 = time.time()
-
-    print(t2 - t1)
+        # print("*" * int(1 + hist[i] / 10))
+        f.write("%s     %s \n" % (i * dr, g[i]))
+    f.close()
 
 
 main()
