@@ -57,11 +57,13 @@ def main():
             d[c].append(i)
 
     atom_to_mol = {}
+    atom_to_type = {}
     f3 = open("data_input", 'r')
     f3_list = f3.readlines()
     for i in f3_list:
         i = i.split()
         atom_to_mol[int(i[0])-1] = int(i[1])
+        atom_to_type[int(i[0])-1] = int(i[2])
 
     vol = l1 * l2 * l3
     dr = l1 / (2 * bins)
@@ -89,7 +91,7 @@ def main():
                     na1 += 1
                 for j in range(i + 1, atoms):
                     if step[j][0] == r2:
-                        if atom_to_mol[i] != atom_to_mol[j]:
+                        if atom_to_mol[i] != atom_to_mol[j] and atom_to_type[i] == atom_to_type[j] and atom_to_type[i] == 1:
                             if a<1 and i <1:
                                 na2 +=1
 
