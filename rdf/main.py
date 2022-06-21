@@ -90,7 +90,7 @@ def main():
                 if a < 1:
                     na1 += 1
                 for j in range(i + 1, atoms):
-                    if step[j][0] == r2:
+                    if step[j][0] == r2 and True:
                         if atom_to_mol[i] != atom_to_mol[j] and atom_to_type[i] == atom_to_type[j] and atom_to_type[i] == 1:
                             if a<1 and i <1:
                                 na2 +=1
