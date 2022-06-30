@@ -1,7 +1,10 @@
 import math
 
-import numpy as np
+from scipy import integrate
 import time
+
+
+
 
 
 def main():
@@ -142,6 +145,7 @@ def main():
         rhigh = rlow + dr
         vvol = (4.0 / 3.0) * math.pi * (rhigh ** 3 - rlow ** 3)
         g[i] = hist[i] / (vvol * steps * na2 * rho)
+        #gij = 4 * math.pi * INTEGRATE((g[i] -1) * i**2 dr)
     # print(vvol)
     # print(steps)
     # print(na2)
@@ -167,6 +171,10 @@ def main():
 
 def com(step, osmolyte_atoms):
     xyz = {}
+    h = 1.008
+    o = 15.999
+    n = 14.002
+    c = 12.008
     for i in osmolyte_atoms.keys():
         xyz[i] = [float(step[i][1]), float(step[i][2]), float(step[i][3])]
 
